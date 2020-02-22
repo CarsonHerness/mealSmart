@@ -1,20 +1,7 @@
 import React from 'react';
 import logo from './logo.png';
+import Navbar from './components/Navbar'
 import './App.css';
-
-class Navbar extends React.Component{
-    render() {
-        return (
-            <div>
-              <ul id="nav">
-                <li><a href="#">Home</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Contact</a></li>
-              </ul>
-            </div>
-        );
-    }
-}
 
 function App() {
   return (
@@ -40,6 +27,8 @@ function App() {
           </label>
           <input type="submit" value="Submit" />
         </form>
+
+
       </body>
 
     </div>
