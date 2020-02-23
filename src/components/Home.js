@@ -11,7 +11,7 @@ const recipes = [
       instructions: "Pour caramel on apple. Done.",
       thumbnail: "https://tachyons.io/img/avatar_1.jpg"
     },
-  
+
     {
       id: 2,
       name: "Boiled Egg",
@@ -19,7 +19,7 @@ const recipes = [
       instructions: "Boil water. Put in egg for 8 minutes. Done.",
       thumbnail: "https://tachyons.io/img/avatar_1.jpg"
     },
-  
+
     {
       id: 3,
       name: "Toast",
@@ -27,12 +27,13 @@ const recipes = [
       instructions: "Toast bread for 2 minutes. Spread butter. Done.",
       thumbnail: "https://tachyons.io/img/avatar_1.jpg"
     }
-  
+
   ];
- 
-const home = () => {
+
+class Home extends React.Component {
+    render() {
     return (
-<div className="App">
+      <div className="App">
         <header className="App-header">
           <img src={logo} alt="logo" />
 
@@ -67,6 +68,7 @@ const home = () => {
 
       </div>
     );
+  }
 }
- 
-export default home;
+
+export default Home;
