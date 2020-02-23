@@ -56,13 +56,10 @@ class Home extends React.Component {
                         <input type="submit" value="Submit" />
                     </form>
 
-                    <ul>
-                        {
-                            recipes.map(r => <li>{r.name}
-                            </li>)
-                        }
-                    </ul>
-
+                <div class="btn-group">
+                  {recipes.map(r => <button>
+                  {r.name}</button>)}
+                </div>
 
                 </body>
 
