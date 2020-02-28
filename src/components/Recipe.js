@@ -4,8 +4,8 @@ class Recipe extends React.Component {
     render() {
         return (
             <div>
-               <h1>Recipe name here</h1>
-               <p>Recipe page body content</p>
+               <h1>{this.props.recipe.name}</h1>
+               <p>{this.props.recipe.instructions}</p>
             </div>
          );
     }

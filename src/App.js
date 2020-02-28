@@ -6,6 +6,7 @@ import Home from './components/Home';
 import About from './components/About';
 import Contact from './components/Contact';
 import Error from './components/Error';
+import Recipe from './components/Recipe';
 
 import Navbar from './components/Navbar'
 import './App.css';
@@ -32,6 +33,7 @@ class App extends React.Component {
               <Route path="/" component={Home} exact />
               <Route path="/about" component={About} />
               <Route path="/contact" component={Contact} />
+              <Route path="/recipe" component={Recipe} />
               <Route component={Error} />
             </Switch>
           </div>

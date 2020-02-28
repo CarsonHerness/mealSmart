@@ -1,6 +1,8 @@
 import React from 'react';
 import logo from '../logo.png';
 
+import { NavLink } from 'react-router-dom';
+import Recipe from './Recipe';
 
 const recipes = [
 
@@ -31,6 +33,25 @@ const recipes = [
 ];
 
 class Home extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            recipe: {
+                id: 1,
+                name: "Caramel Apple",
+                ingredients: [{ amount: "2", unit: "tbsp", name: "Caramel" }, { amount: "1", unit: "Whole", name: "Apple" }],
+                instructions: "Pour caramel on apple. Done.",
+                thumbnail: "https://tachyons.io/img/avatar_1.jpg"
+            }
+        };
+    }
+
+    handleClick(recipe) {
+        this.setState(state => ({
+            recipe: recipe
+        }));
+    }
+
     render() {
         return (
             <div className="App">
@@ -55,17 +76,18 @@ class Home extends React.Component {
                         </label>
                         <input type="submit" value="Submit" />
                     </form>
-
-                <div class="btn-group">
-                  {recipes.map(r => <button>
-                  {r.name}</button>)}
-                </div>
-
+                    <div class="btn-group">
+                        {recipes.map(r => <button onClick={() => this.handleClick(r)}>
+                            {r.name}</button>)}
+                    </div>
+                    <Recipe recipe={this.state.recipe}></Recipe>
                 </body>
 
             </div>
         );
     }
 }
+
+
 
 export default Home;
