@@ -2,6 +2,7 @@ import React from 'react';
 import logo from '../logo.png';
 
 import Recipe from './Recipe';
+import RecipeSearchItem from './RecipeSearchItem';
 
 import RECIPES from '../hardcoded-recipes';
 
@@ -45,10 +46,7 @@ class Home extends React.Component {
                         </label>
                         <input type="submit" value="Submit" />
                     </form>
-                    <div class="btn-group">
-                        {recipes.map(r => <button onClick={() => this.handleClick(r)}>
-                            {r.name}</button>)}
-                    </div>
+                    {recipes.map(r => <RecipeSearchItem recipe={r} func={() => this.handleClick(r)}></RecipeSearchItem >)}
                     <Recipe recipe={this.state.recipe}></Recipe>
                 </body>
 
