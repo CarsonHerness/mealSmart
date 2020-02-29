@@ -11,13 +11,7 @@ class Home extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            recipe: {
-                id: 1,
-                name: "Caramel Apple",
-                ingredients: [{ amount: "2", unit: "tbsp", name: "Caramel" }, { amount: "1", unit: "Whole", name: "Apple" }],
-                instructions: "Pour caramel on apple. Done.",
-                thumbnail: "https://tachyons.io/img/avatar_1.jpg"
-            }
+            recipe: undefined
         };
     }
 
