@@ -8,7 +8,6 @@ class Recipe extends React.Component {
         if (this.props.recipe !== undefined) {
             return (
                 <div>
-                    <Header />
                     <h1>{this.props.recipe.name}</h1>
                     <p>{this.props.recipe.instructions}</p>
                 </div>
@@ -16,7 +15,6 @@ class Recipe extends React.Component {
         } else {
             return (
                 <div>
-                    <Header />
                     <h1> Please select a recipe. </h1>
                 </div>
             );

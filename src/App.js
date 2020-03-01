@@ -8,7 +8,8 @@ import Contact from './components/Contact';
 import Error from './components/Error';
 import Recipe from './components/Recipe';
 
-import Navbar from './components/Navbar'
+import Navbar from './components/Navbar';
+import Header from './components/Header';
 import './App.css';
 
 import { createStore, applyMiddleware, compose } from 'redux';
@@ -33,6 +34,7 @@ class App extends React.Component {
         <BrowserRouter>
           <div>
             <Navbar />
+            <Header />
             <Switch>
               <Route path="/" component={Home} exact />
               <Route path="/about" component={About} />
@@ -41,7 +43,7 @@ class App extends React.Component {
 
               {/* make route for every recipe */}
               {recipes.map(r => <Route path={`/recipe/${r.id}`} render={() => <Recipe recipe={r}></Recipe> } />)}
-              
+
               <Route component={Error} />
             </Switch>
           </div>

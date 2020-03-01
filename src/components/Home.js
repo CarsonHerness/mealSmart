@@ -17,7 +17,6 @@ class Home extends React.Component {
     render() {
         return (
             <div className="App">
-                <Header />
                 <body className="App-body">
                     <form>
                         <label>
