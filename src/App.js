@@ -16,10 +16,14 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import reducer from './reducer';
 
+import RECIPES from './hardcoded-recipes';
+
 const store = createStore(reducer, compose(
   applyMiddleware(thunk),
   window.devToolsExtension ? window.devToolsExtension() : f => f // This is for dev tools, optional
 ));
+
+const recipes = RECIPES;
 
 class App extends React.Component {
 
@@ -33,7 +37,11 @@ class App extends React.Component {
               <Route path="/" component={Home} exact />
               <Route path="/about" component={About} />
               <Route path="/contact" component={Contact} />
-              <Route path="/recipe" component={Recipe} />
+              <Route exact path="/recipe" component={Recipe} />
+
+              {/* make route for every recipe */}
+              {recipes.map(r => <Route path={`/recipe/${r.id}`} render={() => <Recipe recipe={r}></Recipe> } />)}
+              
               <Route component={Error} />
             </Switch>
           </div>

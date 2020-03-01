@@ -2,6 +2,7 @@ import React from 'react';
  
 class Recipe extends React.Component {
     render() {
+        // only display a recipe if a recipe has been chosen
         if (this.props.recipe !== undefined) {
             return (
                 <div>

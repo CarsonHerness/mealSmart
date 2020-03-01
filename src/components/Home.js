@@ -15,13 +15,6 @@ class Home extends React.Component {
             recipe: undefined
         };
     }
-
-    handleClick(recipe) {
-        this.setState(state => ({
-            recipe: recipe
-        }));
-    }
-
     render() {
         return (
             <div className="App">
@@ -46,10 +39,10 @@ class Home extends React.Component {
                         </label>
                         <input type="submit" value="Submit" />
                     </form>
-                    {recipes.map(r => <RecipeSearchItem recipe={r} func={() => this.handleClick(r)}></RecipeSearchItem >)}
-                    <Recipe recipe={this.state.recipe}></Recipe>
+                    
+                    {/* Display all recipes from search. Currently hard-coded to show all recipes. */}
+                    {recipes.map(r => <RecipeSearchItem recipe={r}></RecipeSearchItem>)}
                 </body>
-
             </div>
         );
     }
