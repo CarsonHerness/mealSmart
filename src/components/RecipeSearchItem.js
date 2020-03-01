@@ -4,19 +4,22 @@ import React from 'react';
 class RecipeSearchItem extends React.Component {
     render() {
         return (
-            <article className="recipe-search-item" id={this.props.recipe.id}>
-                <div>
-                    <img src={this.props.recipe.thumbnail} alt={this.props.recipe.name} title={this.props.recipe.name} />
-                    <h1>{this.props.recipe.name}</h1>
+            <div className="recipe-search-item">
+                <article>
+                    <div>
+                        <img src={this.props.recipe.thumbnail} alt={this.props.recipe.name} title={this.props.recipe.name} />
+                        <h1>{this.props.recipe.name}</h1>
 
-                    <div className="btn-group">
+                        <div className="btn-group">
 
-                        <button onClick={() => this.props.func(this.props.recipe)}>
-                            See recipe</button>
+                            <button onClick={() => this.props.func(this.props.recipe)}>
+                                See recipe</button>
 
+                        </div>
                     </div>
-                </div>
-            </article>
+                </article >
+            </div>
+
 
         );
     }
