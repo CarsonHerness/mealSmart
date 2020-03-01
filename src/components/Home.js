@@ -1,8 +1,7 @@
 import React from 'react';
-import logo from '../logo.png';
 
-import Recipe from './Recipe';
 import RecipeSearchItem from './RecipeSearchItem';
+import Header from './Header';
 
 import RECIPES from '../hardcoded-recipes';
 
@@ -18,19 +17,7 @@ class Home extends React.Component {
     render() {
         return (
             <div className="App">
-                <header className="App-header">
-                    <img src={logo} alt="logo" />
-
-                    <form>
-                        <label>
-                            Username:
-              <input type="text" name="name" />
-                            Password:
-              <input type="text" name="password" />
-                        </label>
-                        <input type="submit" value="Submit" />
-                    </form>
-                </header>
+                <Header />
                 <body className="App-body">
                     <form>
                         <label>
