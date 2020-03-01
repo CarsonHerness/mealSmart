@@ -4,7 +4,7 @@ import React from 'react';
 class RecipeSearchItem extends React.Component {
     render() {
         return (
-            <article id={this.props.recipe.id}>
+            <article className="recipe-search-item" id={this.props.recipe.id}>
                 <div>
                     <img src={this.props.recipe.thumbnail} alt={this.props.recipe.name} title={this.props.recipe.name} />
                     <h1>{this.props.recipe.name}</h1>

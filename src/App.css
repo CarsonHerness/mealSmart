@@ -61,3 +61,16 @@
     transform: rotate(360deg);
   }
 }
+
+.recipe-search-item  {
+  background-color: black;
+  border: 1px solid rgb(248, 0, 165); /* pink border */
+  color: white; /* White text */
+  padding: 10px 24px; /* Some padding */
+  width: 50%; /* Set a width if needed */
+  display: block; /* Make the buttons appear below each other */
+}
+
+.recipe-search-item img {
+  width: 50%;
+}
