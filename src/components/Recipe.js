@@ -10,6 +10,7 @@ class Recipe extends React.Component {
                 <div>
                     <h1>{this.props.recipe.name}</h1>
                     <p>{this.props.recipe.instructions}</p>
+                    <img src={this.props.recipe.thumbnail} alt={this.props.recipe.name} title={this.props.recipe.name} />
                 </div>
             );
         } else {
