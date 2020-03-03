@@ -1,19 +1,12 @@
 import React from 'react';
 
 import RecipeSearchItem from './RecipeSearchItem';
-import Header from './Header';
 
 import RECIPES from '../hardcoded-recipes';
 
 const recipes = RECIPES;
 
 class Home extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            recipe: undefined
-        };
-    }
     render() {
         return (
             <div className="App">
