@@ -1,7 +1,5 @@
 import React from 'react';
 
-import Header from './Header';
-
 class Recipe extends React.Component {
     render() {
         // only display a recipe if a recipe has been chosen

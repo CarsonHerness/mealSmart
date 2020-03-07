@@ -1,22 +1,53 @@
-import React from 'react';
 import logo from '../logo.png';
 
+import React from 'react';
+
+
+import {
+    Collapse,
+    Navbar,
+    NavbarToggler,
+    NavbarBrand,
+    Nav,
+    NavItem,
+    NavLink,
+} from 'reactstrap';
+
 class Header extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isOpen: false,
+        };
+    }
+    setIsOpen(isOpen) {
+        this.setState({
+            isOpen: isOpen
+        });
+    }
+
+    toggle() {
+        this.setIsOpen(!this.isOpen);
+    }
+
     render() {
         return (
-            <header className="App-header">
-                <img src={logo} alt="logo" />
-
-                <form>
-                    <label>
-                        Username:
-              <input type="text" name="name" />
-                        Password:
-              <input type="text" name="password" />
-                    </label>
-                    <input type="submit" value="Submit" />
-                </form>
-            </header>
+            <div>
+                <Navbar color="light" light expand="md">
+                    <NavbarBrand href="/"><img src={logo} alt="mealSmart logo" title="meal smart"></img></NavbarBrand>
+                    <NavbarToggler onClick={this.toggle} />
+                    <Collapse isOpen={this.isOpen} navbar>
+                        <Nav className="mr-auto" navbar>
+                            <NavItem>
+                                <NavLink href="/about/">About</NavLink>
+                            </NavItem>
+                            <NavItem>
+                                <NavLink href="/contact/">Contact</NavLink>
+                            </NavItem>
+                        </Nav>
+                    </Collapse>
+                </Navbar>
+            </div>
         );
     }
 }

@@ -8,7 +8,6 @@ import Contact from './components/Contact';
 import Error from './components/Error';
 import Recipe from './components/Recipe';
 
-import Navbar from './components/Navbar';
 import Header from './components/Header';
 import './App.css';
 
@@ -33,7 +32,6 @@ class App extends React.Component {
       <Provider store={store}>
         <BrowserRouter>
           <div>
-            <Navbar />
             <Header />
             <Switch>
               <Route path="/" component={Home} exact />
