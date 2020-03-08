@@ -37,3 +37,25 @@
   margin-left: auto;
   margin-right: auto;
 }
+
+.recipe-search-item img {
+  max-width: 50%;
+  width: auto;
+  border-radius: 8px;
+  max-height: 150px;
+  max-width: 150px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.recipe img {
+  max-width: 50%;
+  width: auto;
+  border-radius: 8px;
+  max-height: 400px;
+  max-width: 400px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
