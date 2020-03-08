@@ -16,7 +16,7 @@ import {
 } from 'reactstrap';
 
 const Header = (props) => {
-    const [isOpen, setIsOpen] = useState(true);
+    const [isOpen, setIsOpen] = useState(false);
 
     const toggle = () => setIsOpen(!isOpen);
 
@@ -34,10 +34,9 @@ const Header = (props) => {
                             <NavLink href="/contact/">Contact</NavLink>
                         </NavItem>
                     </Nav>
-
                 </Collapse>
                 <LoginModal/>
-                   <SignUpModal/>
+                <SignUpModal/>
             </Navbar>
         </div>
     );

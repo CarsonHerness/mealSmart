@@ -4,6 +4,8 @@ import RecipeSearchItem from './RecipeSearchItem';
 
 import RECIPES from '../hardcoded-recipes';
 
+import { CardDeck } from 'reactstrap';
+
 const recipes = RECIPES;
 
 class Home extends React.Component {
@@ -18,9 +20,10 @@ class Home extends React.Component {
                         </label>
                         <input type="submit" value="Submit" />
                     </form>
-                    
-                    {/* Display all recipes from search. Currently hard-coded to show all recipes. */}
-                    {recipes.map(r => <RecipeSearchItem recipe={r}></RecipeSearchItem>)}
+                    <CardDeck>
+                        {/* Display all recipes from search. Currently hard-coded to show all recipes. */}
+                        {recipes.map(r => <RecipeSearchItem recipe={r}></RecipeSearchItem>)}
+                    </CardDeck>
                 </body>
             </div>
         );

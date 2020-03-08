@@ -28,8 +28,8 @@ class App extends React.Component {
               <Route path="/contact" component={Contact} />
               <Route exact path="/recipe" component={Recipe} />
 
-              {/* make route for every recipe */}
-              {recipes.map(r => <Route path={`/recipe/${r.id}`} render={() => <Recipe recipe={r}></Recipe> } />)}
+                {/* make route for every recipe */}
+                {recipes.map(r => <Route path={`/recipe/${r.id}`} render={() => <Recipe recipe={r}></Recipe> } />)}
 
               <Route component={Error} />
             </Switch>
