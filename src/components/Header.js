@@ -2,12 +2,11 @@ import logo from '../logo.png';
 
 import React from 'react';
 
+import LoginModal from '../components/LoginModal';
+import SignUpModal from '../components/SignUpModal';
+
 import {
     Collapse,
-    Form,
-    FormGroup,
-    Label,
-    Input,
     Navbar,
     NavbarToggler,
     NavbarBrand,
@@ -22,10 +21,13 @@ class Header extends React.Component {
         this.state = {
             isOpen: false,
         };
+
+        this.toggle = this.toggle.bind(this);
+        //this.setIsOpen = this.setIsOpen.bind(this);
     }
-    setIsOpen(isOpen) {
+    setIsOpen(newisOpen) {
         this.setState({
-            isOpen: isOpen
+            isOpen: newisOpen
         });
     }
 
@@ -49,17 +51,11 @@ class Header extends React.Component {
                             </NavItem>
                         </Nav>
 
-                        <Form>
-                            <FormGroup>
-                                <Label color="light" light expand="md">Sign in</Label>
-                                <Input type="email" name="email" id="exampleEmail" placeholder="Email" />
-                            </FormGroup>
-                            <FormGroup>
-                                <Input type="password" name="password" id="examplePassword" placeholder="Password" />
-                            </FormGroup>
-                        </Form>
-
+                       
                     </Collapse>
+
+                   <LoginModal/>
+                   <SignUpModal/>
                 </Navbar>
             </div>
         );
