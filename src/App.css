@@ -14,8 +14,8 @@
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+  background-color: #2e255f;
+  min-height: 8vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -24,9 +24,34 @@
   color: white;
 }
 
+.App-body {
+  background-color: #027a1c;
+  min-height: 100vh;
+  color: white;
+}
+
 .App-link {
   color: #61dafb;
 }
+
+.btn-group button {
+  background-color: #4CAF50; /* Green background */
+  border: 1px solid green; /* Green border */
+  color: white; /* White text */
+  padding: 10px 24px; /* Some padding */
+  cursor: pointer; /* Pointer/hand icon */
+  width: 50%; /* Set a width if needed */
+  display: block; /* Make the buttons appear below each other */
+  align-items: center;
+  justify-content: center;
+}
+
+/* Add a background color on hover */
+.btn-group button:hover {
+  background-color: #3e8e41;
+}
+
+
 
 @keyframes App-logo-spin {
   from {
@@ -35,4 +60,17 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.recipe-search-item  {
+  background-color: black;
+  border: 1px solid rgb(248, 0, 165); /* pink border */
+  color: white; /* White text */
+  padding: 10px 24px; /* Some padding */
+  width: 50%; /* Set a width if needed */
+  display: block; /* Make the buttons appear below each other */
+}
+
+.recipe-search-item img {
+  width: 50%;
 }
