@@ -11,17 +11,7 @@ import Recipe from './components/Recipe';
 import Header from './components/Header';
 import './App.css';
 
-import { createStore, applyMiddleware, compose } from 'redux';
-import { Provider } from 'react-redux';
-import thunk from 'redux-thunk';
-import reducer from './reducer';
-
 import RECIPES from './hardcoded-recipes';
-
-const store = createStore(reducer, compose(
-  applyMiddleware(thunk),
-  window.devToolsExtension ? window.devToolsExtension() : f => f // This is for dev tools, optional
-));
 
 const recipes = RECIPES;
 
@@ -29,7 +19,6 @@ class App extends React.Component {
 
   render() {
     return (
-      <Provider store={store}>
         <BrowserRouter>
           <div>
             <Header />
@@ -46,10 +35,8 @@ class App extends React.Component {
             </Switch>
           </div>
         </BrowserRouter>
-      </Provider>
     );
   }
-
 }
 
 export default App;

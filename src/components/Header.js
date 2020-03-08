@@ -1,6 +1,6 @@
 import logo from '../logo.png';
 
-import React from 'react';
+import React, { useState } from 'react';
 
 import LoginModal from '../components/LoginModal';
 import SignUpModal from '../components/SignUpModal';
@@ -15,51 +15,32 @@ import {
     NavLink,
 } from 'reactstrap';
 
-class Header extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            isOpen: false,
-        };
+const Header = (props) => {
+    const [isOpen, setIsOpen] = useState(true);
 
-        this.toggle = this.toggle.bind(this);
-        //this.setIsOpen = this.setIsOpen.bind(this);
-    }
-    setIsOpen(newisOpen) {
-        this.setState({
-            isOpen: newisOpen
-        });
-    }
+    const toggle = () => setIsOpen(!isOpen);
 
-    toggle() {
-        this.setIsOpen(!this.isOpen);
-    }
+    return (
+        <div>
+            <Navbar color="light" light expand="md">
+                <NavbarBrand href="/"><img src={logo} alt="meal smart logo" title="mealSmart"></img></NavbarBrand>
+                <NavbarToggler onClick={toggle} />
+                <Collapse isOpen={isOpen} navbar>
+                    <Nav className="mr-auto" navbar>
+                        <NavItem>
+                            <NavLink href="/about/">About</NavLink>
+                        </NavItem>
+                        <NavItem>
+                            <NavLink href="/contact/">Contact</NavLink>
+                        </NavItem>
+                    </Nav>
 
-    render() {
-        return (
-            <div>
-                <Navbar color="light" light expand="md">
-                    <NavbarBrand href="/"><img src={logo} alt="mealSmart logo" title="meal smart"></img></NavbarBrand>
-                    <NavbarToggler onClick={this.toggle} />
-                    <Collapse isOpen={this.isOpen} navbar>
-                        <Nav className="mr-auto" navbar>
-                            <NavItem>
-                                <NavLink href="/about/">About</NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink href="/contact/">Contact</NavLink>
-                            </NavItem>
-                        </Nav>
-
-                       
-                    </Collapse>
-
-                   <LoginModal/>
+                </Collapse>
+                <LoginModal/>
                    <SignUpModal/>
-                </Navbar>
-            </div>
-        );
-    }
+            </Navbar>
+        </div>
+    );
 }
 
 export default Header;
