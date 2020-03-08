@@ -1,6 +1,6 @@
 import logo from '../logo.png';
 
-import React from 'react';
+import React, { useState } from 'react';
 
 import {
     Collapse,
@@ -16,54 +16,40 @@ import {
     NavLink,
 } from 'reactstrap';
 
-class Header extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            isOpen: false,
-        };
-    }
-    setIsOpen(isOpen) {
-        this.setState({
-            isOpen: isOpen
-        });
-    }
+const Header = (props) => {
+    const [isOpen, setIsOpen] = useState(true);
 
-    toggle() {
-        this.setIsOpen(!this.isOpen);
-    }
+    const toggle = () => setIsOpen(!isOpen);
 
-    render() {
-        return (
-            <div>
-                <Navbar color="light" light expand="md">
-                    <NavbarBrand href="/"><img src={logo} alt="mealSmart logo" title="meal smart"></img></NavbarBrand>
-                    <NavbarToggler onClick={this.toggle} />
-                    <Collapse isOpen={this.isOpen} navbar>
-                        <Nav className="mr-auto" navbar>
-                            <NavItem>
-                                <NavLink href="/about/">About</NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink href="/contact/">Contact</NavLink>
-                            </NavItem>
-                        </Nav>
+    return (
+        <div>
+            <Navbar color="light" light expand="md">
+                <NavbarBrand href="/"><img src={logo} alt="meal smart logo" title="mealSmart"></img></NavbarBrand>
+                <NavbarToggler onClick={toggle} />
+                <Collapse isOpen={isOpen} navbar>
+                    <Nav className="mr-auto" navbar>
+                        <NavItem>
+                            <NavLink href="/about/">About</NavLink>
+                        </NavItem>
+                        <NavItem>
+                            <NavLink href="/contact/">Contact</NavLink>
+                        </NavItem>
+                    </Nav>
 
-                        <Form>
-                            <FormGroup>
-                                <Label color="light" light expand="md">Sign in</Label>
-                                <Input type="email" name="email" id="exampleEmail" placeholder="Email" />
-                            </FormGroup>
-                            <FormGroup>
-                                <Input type="password" name="password" id="examplePassword" placeholder="Password" />
-                            </FormGroup>
-                        </Form>
+                    <Form>
+                        <FormGroup>
+                            <Label color="light" light expand="md">Sign in</Label>
+                            <Input type="email" name="email" id="exampleEmail" placeholder="Email" />
+                        </FormGroup>
+                        <FormGroup>
+                            <Input type="password" name="password" id="examplePassword" placeholder="Password" />
+                        </FormGroup>
+                    </Form>
 
-                    </Collapse>
-                </Navbar>
-            </div>
-        );
-    }
+                </Collapse>
+            </Navbar>
+        </div>
+    );
 }
 
 export default Header;
