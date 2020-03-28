@@ -33,6 +33,9 @@ const Header = (props) => {
                         <NavItem>
                             <NavLink href="/contact/">Contact</NavLink>
                         </NavItem>
+                        <NavItem>
+                            <NavLink href="/add-recipe/">Add Recipe</NavLink>
+                        </NavItem>
                     </Nav>
                 </Collapse>
                 <LoginModal/>
