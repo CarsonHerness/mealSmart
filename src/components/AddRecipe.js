@@ -1,12 +1,15 @@
 import React from 'react';
 import firebase from '../Firestore';
 
+import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+
 class AddRecipe extends React.Component {
     constructor() {
         super();
         this.state = {
             name: "",
-            description: ""
+            description: "",
+            instructions: ""
         };
     }
 
@@ -23,39 +26,64 @@ class AddRecipe extends React.Component {
         Firestore after the submit button is pressed
     */
     addRecipe = e => {
-        e.preventDefault();const db = firebase.firestore();
+        e.preventDefault(); const db = firebase.firestore();
         db.settings({
-          timestampsInSnapshots: true
+            timestampsInSnapshots: true
         });
+
+        // parse the instructions by line to be stored as an array in Firestore
+        var instructionsList = this.state.instructions.split("\n");
+        
         const recipeRef = db.collection("recipes").add({
-          name: this.state.name,
-          description: this.state.description
-        });  
+            name: this.state.name,
+            description: this.state.description,
+            instructions: instructionsList
+        });
         this.setState({
             name: "",
-            description: ""
+            description: "",
+            instructions: ""
         });
     }
 
     render() {
         return (
-            <form onSubmit={this.addRecipe}>
-                <input
-                    type="text"
-                    name="name"
-                    placeholder="name of recipe"
-                    onChange={this.updateInput}
-                    value={this.state.name}
-                />
-                <input
-                    type="text"
-                    name="description"
-                    placeholder="one sentence description"
-                    onChange={this.updateInput}
-                    value={this.state.description}
-                />
-                <button type="submit">Submit</button>
-            </form>
+            <Form onSubmit={this.addRecipe}>
+                <FormGroup>
+                    <Label for="recipeName">Name</Label>
+                    <Input 
+                        type="text" 
+                        name="name" 
+                        id="recipeName" 
+                        placeholder="name of recipe" 
+                        onChange={this.updateInput} 
+                        value={this.state.name} 
+                    />
+                </FormGroup>
+                <FormGroup>
+                    <Label for="recipeDescription">Description</Label>
+                    <Input 
+                        type="textarea" 
+                        name="description" 
+                        id="recipeDescription" 
+                        placeholder="brief description of the recipe" 
+                        onChange={this.updateInput} 
+                        value={this.state.description} 
+                    />
+                </FormGroup>
+                <FormGroup>
+                    <Label for="recipeInstructions">Instructions</Label>
+                    <Input 
+                        type="textarea" 
+                        name="instructions" 
+                        id="recipeInstructions"
+                        placeholder="Put each instruction on a new line"
+                        onChange={this.updateInput}
+                        value={this.state.instructions}
+                    />
+                </FormGroup>
+                <Button type="submit">Submit</Button>
+            </Form>
         );
     }
 }
