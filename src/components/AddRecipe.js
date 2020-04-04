@@ -1,5 +1,7 @@
-import React from 'react';
-import firebase from '../Firestore';
+import React from 'react'; // We could add { Component } here to clean up code
+import { connect } from 'react-redux'
+import { addRecipe } from '../store/actions/recipeActions'
+import firebase from '../fbConfig';
 
 import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 
@@ -25,16 +27,16 @@ class AddRecipe extends React.Component {
         state to default empty, and submits the data to 
         Firestore after the submit button is pressed
     */
-    addRecipe = e => {
-        e.preventDefault(); const db = firebase.firestore();
-        db.settings({
-            timestampsInSnapshots: true
-        });
+    handleSubmit = e => {
+        e.preventDefault();
 
         // parse the instructions by line to be stored as an array in Firestore
-        var instructionsList = this.state.instructions.split("\n");
+        this.state.instructions = this.state.instructions.split("\n");
+
+        // Pass state into action performed by mapDispatchToProps
+        this.props.addRecipe(this.state)
         
-        const recipeRef = db.collection("recipes").add({
+        /*const recipeRef = db.collection("recipes").add({
             name: this.state.name,
             description: this.state.description,
             instructions: instructionsList
@@ -43,12 +45,12 @@ class AddRecipe extends React.Component {
             name: "",
             description: "",
             instructions: ""
-        });
+        });*/
     }
 
     render() {
         return (
-            <Form onSubmit={this.addRecipe}>
+            <Form onSubmit={this.handleSubmit}>
                 <FormGroup>
                     <Label for="recipeName">Name</Label>
                     <Input 
@@ -88,4 +90,11 @@ class AddRecipe extends React.Component {
     }
 }
 
-export default AddRecipe;
+// mapDispatchToProps tells connect to perform an action before updating props
+const mapDispatchToProps = (dispatch) => {
+    return {
+        addRecipe: (recipe) => dispatch(addRecipe(recipe))
+    }
+}
+
+export default connect(null, mapDispatchToProps)(AddRecipe);
