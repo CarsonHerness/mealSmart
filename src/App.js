@@ -6,6 +6,7 @@ import Home from './components/Home';
 import About from './components/About';
 import Contact from './components/Contact';
 import Error from './components/Error';
+import firebase from 'firebase';
 import Recipe from './components/Recipe';
 import AddRecipe from './components/AddRecipe';
 
@@ -13,8 +14,6 @@ import Header from './components/Header';
 import './App.css';
 
 import RECIPES from './hardcoded-recipes';
-
-const recipes = RECIPES;
 
 class App extends React.Component {
 
@@ -31,7 +30,7 @@ class App extends React.Component {
               <Route exact path="/recipe" component={Recipe} />
 
                 {/* make route for every recipe */}
-                {recipes.map(r => <Route path={`/recipe/${r.id}`} render={() => <Recipe recipe={r}></Recipe> } />)}
+                {/*recipes.get().then(snapshot => {snapshot.forEach(r => <Route path={`/recipe/${r.id}`} render={() => <Recipe recipe={r}></Recipe> } /> )})*/}
 
               <Route component={Error} />
             </Switch>
