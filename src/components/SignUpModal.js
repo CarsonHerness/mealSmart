@@ -14,10 +14,16 @@ class SignUpModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      modal: false
+      modal: false,
+      email: '',
+      password: '',
+      firstName: '',
+      lastName: ''
     };
 
     this.toggle = this.toggle.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   toggle() {
@@ -26,26 +32,43 @@ class SignUpModal extends Component {
     });
   }
 
+  handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(this.state)
+  }
+
+  handleChange = (e) => {
+    this.setState({
+      [e.target.id]: e.target.value
+    })
+  }
+
   render() {
     return (
       <div>
         <Button color="primary" onClick={this.toggle}>Sign Up</Button>
         <Modal isOpen={this.state.modal} toggle={this.toggle}>
-          <ModalHeader toggle={this.toggle}>Sign Up</ModalHeader>
-          <ModalBody>
-            <Form>
+          <Form onSubmit={this.handleSubmit}>
+            <ModalHeader toggle={this.toggle}>Sign Up</ModalHeader>
+            <ModalBody>
               <FormGroup>
-                <Input type="email" name="email" id="exampleEmail" placeholder="Email" />
+                <Input type="email" name="email" id="email" placeholder="Email" onChange={this.handleChange} />
               </FormGroup>
               <FormGroup>
-                <Input type="password" name="password" id="examplePassword" placeholder="Password" />
+                <Input type="password" name="password" id="password" placeholder="Password" onChange={this.handleChange} />
               </FormGroup>
-            </Form>
-          </ModalBody>
-          <ModalFooter>
-            <Button color="primary" onClick={this.toggle}>Sign Up</Button>{' '}
-            <Button color="secondary" onClick={this.toggle}>Cancel</Button>
-          </ModalFooter>
+              <FormGroup>
+                <Input type="text" name="firstName" id="firstName" placeholder="First Name" onChange={this.handleChange} />
+              </FormGroup>
+              <FormGroup>
+                <Input type="text" name="lastName" id="lastName" placeholder="Last Name" onChange={this.handleChange} />
+              </FormGroup>
+            </ModalBody>
+            <ModalFooter>
+              <Button type="submit" color="primary" onClick={this.toggle}>Sign Up</Button>{' '}
+              <Button color="secondary" onClick={this.toggle}>Cancel</Button>
+            </ModalFooter>
+          </Form>
         </Modal>
       </div>
     )

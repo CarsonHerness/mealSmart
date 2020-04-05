@@ -1,11 +1,11 @@
-import React from 'react'; // We could add { Component } here to clean up code
+import React, {Component} from 'react';
+
 import { connect } from 'react-redux'
 import { addRecipe } from '../store/actions/recipeActions'
-import firebase from '../fbConfig';
 
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 
-class AddRecipe extends React.Component {
+class AddRecipe extends Component {
     constructor() {
         super();
         this.state = {
@@ -18,9 +18,9 @@ class AddRecipe extends React.Component {
 
     /* updates the corresponding state as values are 
     entered into the inputs */
-    updateInput = e => {
+    handleChange = (e) => {
         this.setState({
-            [e.target.name]: e.target.value
+            [e.target.id]: e.target.value
         });
     }
 
@@ -28,107 +28,45 @@ class AddRecipe extends React.Component {
         state to default empty, and submits the data to 
         Firestore after the submit button is pressed
     */
-    handleSubmit = e => {
+    handleSubmit = (e) => {
         e.preventDefault();
 
         // parse the ingredients by line
-        var ingredientList = this.state.ingredients.split("\n");
+        this.setState(previousState => {
+            return {
+              ingredients: previousState.ingredients.split("\n")
+            }
+        })
 
-        // parse each ingredient by amount and type
-        var parsedIngredients = []
-        var ingredient;
-        var parsedIngredient;
-        for (ingredient in ingredientList) {
-            // TODO: create RegEx for ingredient (number, space, letters, space, everything else is type)
-            // TODO: catch and handle errors
-            parsedIngredient = ingredient.split(" ");
-            ingredient = {
-                amount: parsedIngredient[0],
-                unit: parsedIngredient[1],
-                type: parsedIngredient[2]
-            };
-            parsedIngredients.concat(ingredient);
-        }
+        // parse the instructions by line to be stored as an array in Firestore
+        this.setState(previousState => {
+            return {
+              instructions: previousState.instructions.split("\n")
+            }
+        })
 
-        // // parse the instructions by line to be stored as an array in Firestore
-        // var instructionsList = this.state.instructions.split("\n");
-
-        // // Add ingredients to Firestore
-        // let ingredientListRef = db.collection('ingredient-lists').doc();
-        // ingredientListRef.set({
-        //     ingredients: parsedIngredients,
-        //     ingredientList: ingredientList
-        // });
-
-        // // Add recipe to Firestore, with link to ingredients
-        // // TODO: Add link to ingredients document
-        // db.collection("recipes").add({
-        // this.state.instructions = this.state.instructions.split("\n");
-
-        // // Pass state into action performed by mapDispatchToProps
-        // this.props.addRecipe(this.state)
-        
-        /*const recipeRef = db.collection("recipes").add({
-            name: this.state.name,
-            description: this.state.description,
-            instructions: instructionsList
-        });
-
-        // reset the state to default blanks
-        this.setState({
-            name: "",
-            description: "",
-            ingredients: "",
-            instructions: ""
-        });*/
+        // Pass state into action performed by mapDispatchToProps
+        this.props.addRecipe(this.state);
     }
 
     render() {
         return (
             <Form onSubmit={this.handleSubmit}>
                 <FormGroup>
-                    <Label for="recipeName">Name</Label>
-                    <Input 
-                        type="text" 
-                        name="name" 
-                        id="recipeName" 
-                        placeholder="name of recipe" 
-                        onChange={this.updateInput} 
-                        value={this.state.name} 
-                    />
+                    <Label for="name">Name</Label>
+                    <Input type="text" name="name" id="name" placeholder="name of recipe" onChange={this.handleChange} value={this.state.name} />
                 </FormGroup>
                 <FormGroup>
-                    <Label for="recipeDescription">Description</Label>
-                    <Input 
-                        type="textarea" 
-                        name="description" 
-                        id="recipeDescription" 
-                        placeholder="brief description of the recipe" 
-                        onChange={this.updateInput} 
-                        value={this.state.description} 
-                    />
+                    <Label for="description">Description</Label>
+                    <Input type="textarea" name="description" id="description" placeholder="brief description of the recipe" onChange={this.handleChange} value={this.state.description} />
                 </FormGroup>
                 <FormGroup>
-                    <Label for="recipeIngredients">Ingredients</Label>
-                    <Input 
-                        type="textarea" 
-                        name="ingredients" 
-                        id="recipeIngredients"
-                        placeholder="Put each ingredient on a new line"
-                        onChange={this.updateInput}
-                        value={this.state.ingredients}
-                    />
+                    <Label for="ingredients">Ingredients</Label>
+                    <Input type="textarea" name="ingredients" id="ingredients" placeholder="Put each ingredient on a new line" onChange={this.handleChange} value={this.state.ingredients} />
                 </FormGroup>
                 <FormGroup>
-                    <Label for="recipeInstructions">Instructions</Label>
-                    <Input 
-                        type="textarea" 
-                        name="instructions" 
-                        id="recipeInstructions"
-                        placeholder="Put each instruction on a new line"
-                        onChange={this.updateInput}
-                        value={this.state.instructions}
-                    />
+                    <Label for="instructions">Instructions</Label>
+                    <Input type="textarea" name="instructions" id="instructions" placeholder="Put each instruction on a new line" onChange={this.handleChange} value={this.state.instructions} />
                 </FormGroup>
                 <Button type="submit">Submit</Button>
             </Form>

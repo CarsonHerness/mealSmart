@@ -1,7 +1,6 @@
-// PREVIOUSLY: import firebase from 'firebase';
-import firebase from 'firebase/app'
-import 'firebase/firestore'
-import 'firebase/auth' // For authentication later
+import firebase from 'firebase/app';
+import 'firebase/firestore';
+import 'firebase/auth';
 
 const config = {
     apiKey: process.env.REACT_APP_API_KEY,
@@ -13,8 +12,6 @@ const config = {
 };
 
 firebase.initializeApp(config);
-
-// PREVIOUSLY: delete line below
-firebase.firestore().settings({ timestampsInSnapshots: true })
+firebase.firestore();
 
 export default firebase;

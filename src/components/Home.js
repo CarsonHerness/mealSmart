@@ -1,15 +1,10 @@
 import React from 'react';
 import RecipeSearchItem from './RecipeSearchItem';
-import RECIPES from '../hardcoded-recipes';
 import { CardDeck } from 'reactstrap';
 import { connect } from 'react-redux'
 
-// const recipes = RECIPES;
-
 class Home extends React.Component {
     render() {
-        // console.log(this.props);
-
         // Grabs the recipes object off the props
         const { recipes } = this.props;
 
@@ -32,8 +27,6 @@ class Home extends React.Component {
                                 <RecipeSearchItem recipe={recipe} key={recipe.id}></RecipeSearchItem>
                             )
                         })}
-                        {/* Display all recipes from search. Currently hard-coded to show all recipes. */}
-                        {/*recipes.map(r => <RecipeSearchItem recipe={r}></RecipeSearchItem>)*/}
                     </CardDeck>
                 </body>
             </div>

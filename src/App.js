@@ -6,7 +6,6 @@ import Home from './components/Home';
 import About from './components/About';
 import Contact from './components/Contact';
 import Error from './components/Error';
-import firebase from 'firebase';
 import Recipe from './components/Recipe';
 import AddRecipe from './components/AddRecipe';
 
