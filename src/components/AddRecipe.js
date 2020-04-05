@@ -1,7 +1,7 @@
 import React from 'react';
 import firebase from '../Firestore';
 
-import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 
 class AddRecipe extends React.Component {
     constructor() {
@@ -9,6 +9,7 @@ class AddRecipe extends React.Component {
         this.state = {
             name: "",
             description: "",
+            ingredients: "",
             instructions: ""
         };
     }
@@ -31,17 +32,48 @@ class AddRecipe extends React.Component {
             timestampsInSnapshots: true
         });
 
+        // parse the ingredients by line
+        var ingredientList = this.state.ingredients.split("\n");
+
+        // parse each ingredient by amount and type
+        var parsedIngredients = []
+        var ingredient;
+        var parsedIngredient;
+        for (ingredient in ingredientList) {
+            // TODO: create RegEx for ingredient (number, space, letters, space, everything else is type)
+            // TODO: catch and handle errors
+            parsedIngredient = ingredient.split(" ");
+            ingredient = {
+                amount: parsedIngredient[0],
+                unit: parsedIngredient[1],
+                type: parsedIngredient[2]
+            };
+            parsedIngredients.concat(ingredient);
+        }
+
         // parse the instructions by line to be stored as an array in Firestore
         var instructionsList = this.state.instructions.split("\n");
-        
-        const recipeRef = db.collection("recipes").add({
+
+        // Add ingredients to Firestore
+        let ingredientListRef = db.collection('ingredient-lists').doc();
+        ingredientListRef.set({
+            ingredients: parsedIngredients,
+            ingredientList: ingredientList
+        });
+
+        // Add recipe to Firestore, with link to ingredients
+        // TODO: Add link to ingredients document
+        db.collection("recipes").add({
             name: this.state.name,
             description: this.state.description,
             instructions: instructionsList
         });
+
+        // reset the state to default blanks
         this.setState({
             name: "",
             description: "",
+            ingredients: "",
             instructions: ""
         });
     }
@@ -69,6 +101,17 @@ class AddRecipe extends React.Component {
                         placeholder="brief description of the recipe" 
                         onChange={this.updateInput} 
                         value={this.state.description} 
+                    />
+                </FormGroup>
+                <FormGroup>
+                    <Label for="recipeIngredients">Ingredients</Label>
+                    <Input 
+                        type="textarea" 
+                        name="ingredients" 
+                        id="recipeIngredients"
+                        placeholder="Put each ingredient on a new line"
+                        onChange={this.updateInput}
+                        value={this.state.ingredients}
                     />
                 </FormGroup>
                 <FormGroup>

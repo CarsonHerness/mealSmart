@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import {
     Card, CardImg, CardText, CardBody,
-    CardTitle, CardSubtitle, Button
+    CardTitle
 } from 'reactstrap';
 
 const RecipeSearchItem = (props) => {
