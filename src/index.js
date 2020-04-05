@@ -9,14 +9,18 @@ import { createStore, applyMiddleware, compose } from 'redux'
 import rootReducer from './store/reducers/rootReducer'
 import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
+import { reduxFirestore, getFirestore } from 'redux-firestore'
+import { reactReduxFirebase, getFirebase } from 'react-redux-firebase'
+import fbConfig from './fbConfig'
 
-// Set up redux store
 const store = createStore(rootReducer,
-    // Use thunk as middleware for extra funcitonality
-    applyMiddleware(thunk)
+  compose(
+    applyMiddleware(thunk.withExtraArgument({getFirebase, getFirestore})),
+    // reactReduxFirebase(fbConfig), // redux binding for firebase
+    reduxFirestore(fbConfig) // redux bindings for firestore
+  )
 );
 
-// Provider binds redux state to the application
 ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change

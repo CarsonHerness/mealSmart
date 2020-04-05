@@ -3,6 +3,8 @@ import RecipeSearchItem from './RecipeSearchItem';
 import RECIPES from '../hardcoded-recipes';
 import { CardDeck } from 'reactstrap';
 import { connect } from 'react-redux'
+import { firestoreConnect } from 'react-redux-firebase'
+import { compose } from 'redux'
 
 // const recipes = RECIPES;
 
@@ -52,4 +54,9 @@ const mapStateToProps = (state) => {
 } 
 
 // Connect gets data from the store
-export default connect(mapStateToProps)(Home);
+export default compose(
+    connect(mapStateToProps),
+    firestoreConnect([
+        { collection: 'recipes' }
+    ])
+)(Home);
