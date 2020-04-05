@@ -13,6 +13,7 @@ const config = {
 };
 
 firebase.initializeApp(config);
+
 // PREVIOUSLY: delete line below
 firebase.firestore().settings({ timestampsInSnapshots: true })
 

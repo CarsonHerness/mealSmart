@@ -13,8 +13,6 @@ import AddRecipe from './components/AddRecipe';
 import Header from './components/Header';
 import './App.css';
 
-import RECIPES from './hardcoded-recipes';
-
 class App extends React.Component {
 
   render() {
@@ -23,15 +21,11 @@ class App extends React.Component {
           <div>
             <Header />
             <Switch>
-              <Route path="/" component={Home} exact />
+              <Route exact path="/" component={Home} />
               <Route path="/about" component={About} />
               <Route path="/contact" component={Contact} />
               <Route path="/add-recipe" component={AddRecipe} />
-              <Route exact path="/recipe" component={Recipe} />
-
-                {/* make route for every recipe */}
-                {/*recipes.get().then(snapshot => {snapshot.forEach(r => <Route path={`/recipe/${r.id}`} render={() => <Recipe recipe={r}></Recipe> } /> )})*/}
-
+              <Route path="/recipe/:id" component={Recipe} />
               <Route component={Error} />
             </Switch>
           </div>

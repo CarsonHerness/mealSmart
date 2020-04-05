@@ -5,6 +5,7 @@ import { ListGroup, ListGroupItem } from 'reactstrap';
 class Recipe extends React.Component {
     render() {
         // only display a recipe if a recipe has been chosen
+        const id = this.props.match.params.id;
         if (this.props.recipe !== undefined) {
             return (
                 <div className="recipe">
@@ -17,6 +18,7 @@ class Recipe extends React.Component {
                             <img src={this.props.recipe.thumbnail} alt={this.props.recipe.name} title={this.props.recipe.name} />
                         </Col>
                     </Row>
+
                     <Row>
                     
                         <Col xs="auto">
@@ -37,7 +39,7 @@ class Recipe extends React.Component {
         } else {
             return (
                 <div>
-                    <h1> Please select a recipe. </h1>
+                    <h1> Please select a recipe. {id} </h1>
                 </div>
             );
         }
