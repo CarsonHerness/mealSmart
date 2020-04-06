@@ -12,7 +12,9 @@ class AddRecipe extends Component {
             name: "",
             description: "",
             ingredients: "",
-            instructions: ""
+            ingredientsList: [],
+            instructions: "",
+            instructionsList: []
         };
     }
 
@@ -31,22 +33,34 @@ class AddRecipe extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
 
-        // parse the ingredients by line
+        // parse the ingredients by line to be stored as an array in Firestore
         this.setState(previousState => {
             return {
-              ingredients: previousState.ingredients.split("\n")
+              ingredientsList: previousState.ingredients.split("\n")
             }
         })
 
         // parse the instructions by line to be stored as an array in Firestore
         this.setState(previousState => {
             return {
-              instructions: previousState.instructions.split("\n")
+              instructionsList: previousState.instructions.split("\n")
             }
         })
 
         // Pass state into action performed by mapDispatchToProps
         this.props.addRecipe(this.state);
+
+        console.log(this.state)
+        
+        // reset state to be blank
+        this.setState({
+            name: "",
+            description: "",
+            ingredients: "",
+            ingredientsList: [],
+            instructions: "",
+            instructionsList: []
+        })
     }
 
     render() {

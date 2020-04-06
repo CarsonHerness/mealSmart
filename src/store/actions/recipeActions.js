@@ -1,5 +1,3 @@
-
-
 export const addRecipe = (recipe) => {
     return (dispatch, getState, { getFirebase, getFirestore }) => {
         // make async call to database

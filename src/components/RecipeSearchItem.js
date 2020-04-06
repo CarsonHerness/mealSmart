@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import {
-    Card, CardImg, CardText, CardBody,
+    Card, CardText, CardBody,
     CardTitle
 } from 'reactstrap';
 
@@ -10,7 +10,6 @@ const RecipeSearchItem = ({recipe}) => {
     return (
         <div className="recipe-search-item">
             <Card color="light">
-                <CardImg top width="50%" src={recipe.thumbnail} alt={recipe.name} title={recipe.name} href={`/recipe/${recipe.id}`}/>
                 <CardBody>
                     <CardTitle>{recipe.name}</CardTitle>
                     <CardText>{recipe.description}</CardText>

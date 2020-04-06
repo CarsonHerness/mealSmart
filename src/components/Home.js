@@ -1,13 +1,14 @@
 import React from 'react';
 import RecipeSearchItem from './RecipeSearchItem';
 import { CardDeck } from 'reactstrap';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
+import { firestoreConnect } from 'react-redux-firebase';
+import { compose } from 'redux';
 
 class Home extends React.Component {
     render() {
         // Grabs the recipes object off the props
         const { recipes } = this.props;
-
         return (
             <div className="App">
                 <body className="App-body">
@@ -23,7 +24,6 @@ class Home extends React.Component {
                         { recipes && recipes.map(recipe => {
                             return (
                                 // Create a RecipeSearchItem for each recipe.
-                                // Pass in each recipe as a prop.
                                 <RecipeSearchItem recipe={recipe} key={recipe.id}></RecipeSearchItem>
                             )
                         })}
@@ -36,13 +36,14 @@ class Home extends React.Component {
 
 // mapStateToProps tells connect what data to retrieve from the store
 const mapStateToProps = (state) => {
+    console.log(state);
     return {
         // Attach the recipe property from STATE's rootReducer
         //   which in turn has a recipes property from the projectReducer
         //   to a recipes property inside the PROPS of this component
-        recipes: state.recipe.recipes
+        recipes: state.firestore.ordered.recipes
     }
 } 
 
 // Connect gets data from the store
-export default connect(mapStateToProps)(Home);
+export default compose(firestoreConnect(['recipes']),connect(mapStateToProps))(Home)
