@@ -3,18 +3,25 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux'
 import { addRecipe } from '../store/actions/recipeActions'
 
+import { AvForm, AvGroup, AvInput } from 'availity-reactstrap-validation';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 
 class AddRecipe extends Component {
     constructor() {
         super();
+
+        this.addIngredient = this.addIngredient.bind(this);
+        this.updateIngredients = this.updateIngredients.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
         this.state = {
             name: "",
             description: "",
             ingredients: "",
             ingredientsList: [],
             instructions: "",
-            instructionsList: []
+            instructionsList: [],
+            ingredientNum: 0
         };
     }
 
@@ -33,13 +40,6 @@ class AddRecipe extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
 
-        // parse the ingredients by line to be stored as an array in Firestore
-        this.setState(previousState => {
-            return {
-              ingredientsList: previousState.ingredients.split("\n")
-            }
-        })
-
         // parse the instructions by line to be stored as an array in Firestore
         this.setState(previousState => {
             return {
@@ -49,8 +49,6 @@ class AddRecipe extends Component {
 
         // Pass state into action performed by mapDispatchToProps
         this.props.addRecipe(this.state);
-
-        console.log(this.state)
         
         // reset state to be blank
         this.setState({
@@ -59,31 +57,56 @@ class AddRecipe extends Component {
             ingredients: "",
             ingredientsList: [],
             instructions: "",
-            instructionsList: []
+            instructionsList: [],
+            ingredientNum: 0
         })
+    }
+
+    /* Updates the state ingredients list from the input fields */
+    updateIngredients = (e) => {
+        this.state.ingredientsList[e.target.id] = e.target.value
+
+        this.setState({ingredientsList: this.state.ingredientsList})
+    }
+
+    /* Adds another (empty) element in the ingredients list and
+       updates the current number of ingredients stored in state*/
+    addIngredient(){
+        let newIngredientsList = this.state.ingredientsList.concat([" "])
+        let newIngredientNum = this.state.ingredientNum + 1
+
+        this.setState({ingredientsList: newIngredientsList, ingredientNum: newIngredientNum})
     }
 
     render() {
         return (
-            <Form onSubmit={this.handleSubmit}>
-                <FormGroup>
-                    <Label for="name">Name</Label>
-                    <Input type="text" name="name" id="name" placeholder="name of recipe" onChange={this.handleChange} value={this.state.name} />
-                </FormGroup>
-                <FormGroup>
-                    <Label for="description">Description</Label>
-                    <Input type="textarea" name="description" id="description" placeholder="brief description of the recipe" onChange={this.handleChange} value={this.state.description} />
-                </FormGroup>
-                <FormGroup>
-                    <Label for="ingredients">Ingredients</Label>
-                    <Input type="textarea" name="ingredients" id="ingredients" placeholder="Put each ingredient on a new line" onChange={this.handleChange} value={this.state.ingredients} />
-                </FormGroup>
-                <FormGroup>
-                    <Label for="instructions">Instructions</Label>
-                    <Input type="textarea" name="instructions" id="instructions" placeholder="Put each instruction on a new line" onChange={this.handleChange} value={this.state.instructions} />
-                </FormGroup>
-                <Button type="submit">Submit</Button>
-            </Form>
+            <div>
+                <AvForm onSubmit={this.handleSubmit}>
+                    <AvGroup>
+                        <Label for="name">Name</Label>
+                        <AvInput type="text" name="name" id="name" placeholder="name of recipe" onChange={this.handleChange} value={this.state.name} />
+                    </AvGroup>
+                    <AvGroup>
+                        <Label for="description">Description</Label>
+                        <AvInput type="textarea" name="description" id="description" placeholder="brief description of the recipe" onChange={this.handleChange} value={this.state.description} />
+                    </AvGroup>
+                    <AvGroup>
+                        <Label for="ingredients">Ingredients</Label>
+                        
+                        {/* Creates an input field for every array element */}
+                        {[...Array(this.state.ingredientNum)].map((e, i) =>
+                            <AvInput required name="ingredient" id={i} onChange={this.updateIngredients} value={this.state.ingredientsList[i]} />
+                        )}
+                        <hr />
+                        <Button color="info" onClick={this.addIngredient}>Add Ingredient</Button>{' '}
+                    </AvGroup>
+                    <AvGroup>
+                        <Label for="instructions">Instructions</Label>
+                        <AvInput type="textarea" name="instructions" id="instructions" placeholder="Put each instruction on a new line" onChange={this.handleChange} value={this.state.instructions} />
+                    </AvGroup>
+                    <Button type="submit">Submit</Button>
+                </AvForm>
+            </div>
         );
     }
 }
