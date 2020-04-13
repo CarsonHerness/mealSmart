@@ -17,7 +17,6 @@ class AddRecipe extends Component {
         this.state = {
             name: "",
             description: "",
-            ingredients: "",
             ingredientsList: [],
             instructions: "",
             instructionsList: [],
@@ -54,7 +53,6 @@ class AddRecipe extends Component {
         this.setState({
             name: "",
             description: "",
-            ingredients: "",
             ingredientsList: [],
             instructions: "",
             instructionsList: [],
@@ -92,7 +90,7 @@ class AddRecipe extends Component {
                     </AvGroup>
                     <AvGroup>
                         <Label for="ingredients">Ingredients</Label>
-                        
+
                         {/* Creates an input field for every array element */}
                         {[...Array(this.state.ingredientNum)].map((e, i) =>
                             <AvInput required name="ingredient" id={i} onChange={this.updateIngredients} value={this.state.ingredientsList[i]} />

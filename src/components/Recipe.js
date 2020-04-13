@@ -11,7 +11,6 @@ class Recipe extends React.Component {
         // only display a recipe if a recipe has been chosen
         const { recipe } = this.props;
         const instructionsList = recipe.instructions.split('\n');
-        const ingredientsList = recipe.ingredients.split('\n');
         if (recipe) {
             return (
                 <div className="recipe">
@@ -30,7 +29,7 @@ class Recipe extends React.Component {
                         <Col xs="auto">
                             <ListGroup>
                                 <h2>Ingredients</h2>
-                                {ingredientsList.map(i =>
+                                {recipe.ingredientsList.map(i =>
                                     <ListGroupItem>{i}</ListGroupItem>)}
                             </ListGroup>
                             <h2>Instructions</h2>
