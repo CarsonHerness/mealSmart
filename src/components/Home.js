@@ -6,22 +6,49 @@ import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
 
 class Home extends React.Component {
+
+    constructor(props) {
+        super(props);
+
+        //Create local state to store search term
+        this.state = { search: '' };
+
+        this.handleChange = this.handleChange.bind(this);
+    }
+
+    handleChange(event) {
+        this.setState({ search: event.target.value });
+    }
+
     render() {
         // Grabs the recipes object off the props
         const { recipes } = this.props;
+
+        //Get search term
+        const { search } = this.state;
+
+        let filteredRecipes = null;
+
+        //Filter recipes by checking if search term is a substring of the title
+        if (recipes) {
+            filteredRecipes = recipes.filter(recipe => {
+                return recipe.name.toLowerCase().indexOf(search.toLowerCase()) !== -1;
+            });
+        }
+
         return (
             <div className="App">
                 <body className="App-body">
-                    <form>
+                    <form >
                         <label>
                             Search:
-              <input type="text" name="name" />
+              <input type="text" name="name" value={this.state.search} onChange={this.handleChange} />
                         </label>
-                        <input type="submit" value="Submit" />
+                        {/* <input type="submit" value="Submit" /> */}
                     </form>
                     <CardDeck>
-                        {/* Only do map if recipes exist. */}
-                        { recipes && recipes.map(recipe => {
+                        {/* Only do map if recipes exist, and only display searched recipes. */}
+                        {filteredRecipes && filteredRecipes.map(recipe => {
                             return (
                                 // Create a RecipeSearchItem for each recipe.
                                 <RecipeSearchItem recipe={recipe} key={recipe.id}></RecipeSearchItem>
@@ -43,7 +70,7 @@ const mapStateToProps = (state) => {
         //   to a recipes property inside the PROPS of this component
         recipes: state.firestore.ordered.recipes
     }
-} 
+}
 
 // Connect gets data from the store
-export default compose(firestoreConnect(['recipes']),connect(mapStateToProps))(Home)
+export default compose(firestoreConnect(['recipes']), connect(mapStateToProps))(Home)
