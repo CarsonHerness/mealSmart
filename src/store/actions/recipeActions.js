@@ -28,7 +28,7 @@ export const addRecipe = (recipe) => {
                 }).catch((err) => {
                     dispatch({ type: 'ADD_RECIPE_ERROR', err });
                 })
-            )).then(() => {
+            )).then(ref => {
                 dispatch({ type: 'ADD_RECIPE', recipe: recipe });
             })
         }).catch((err) => {
