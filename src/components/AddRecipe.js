@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { addRecipe } from '../store/actions/recipeActions'
 
 import { AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
-import { Button, Form, FormGroup, Label, Input, Col } from 'reactstrap';
+import { Button, Label, Col } from 'reactstrap';
 
 class AddRecipe extends Component {
     constructor() {
@@ -14,6 +14,7 @@ class AddRecipe extends Component {
         this.updateIngredients = this.updateIngredients.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+
         this.state = {
             name: "",
             description: "",
@@ -22,27 +23,34 @@ class AddRecipe extends Component {
             instructions: "",
             instructionsList: [],
             ingredientNum: 0,
+            tags: {}
         };
     }
 
     /* updates the corresponding state as values are 
     entered into the inputs */
     handleChange = (e) => {
-        if (e.target.name === "appliances") {
+        if (e.target.name === "appliances" || e.target.name === "tags") {
             let options = e.target.options
-            let newApplianceList = {}
+            let newList = {}
 
             // Loop through every option and change its value
-            //   in state based on if it's selected or not
+            //   in the object based on if it's selected or not
             for(let i = 0, l = options.length; i < l; i++) {
                 let name = options[i].value
-                newApplianceList[name]= options[i].selected
-                console.log(newApplianceList)
+                newList[name]= options[i].selected
             }
-            this.setState({
-                applianceList: newApplianceList
-            })
-            console.log(this.state.applianceList)
+
+            // Update the correct state component
+            if (e.target.name === "appliances") {
+                this.setState({
+                    applianceList: newList
+                })
+            } else {
+                this.setState({
+                    tags: newList
+                })
+            }
         } else {
             this.setState({
                 [e.target.id]: e.target.value
@@ -75,7 +83,8 @@ class AddRecipe extends Component {
             applianceList: {},
             instructions: "",
             instructionsList: [],
-            ingredientNum: 0
+            ingredientNum: 0,
+            tags: {}
         })
     }
 
@@ -101,38 +110,57 @@ class AddRecipe extends Component {
             <div>
                 <AvForm onSubmit={this.handleSubmit}>
                     <AvGroup>
-                        <Label for="name">Name</Label>
-                        <AvInput type="text" name="name" id="name" placeholder="name of recipe" onChange={this.handleChange} value={this.state.name} />
+                        <Col sx="auto">
+                            <Label for="name">Name</Label>
+                            <AvInput type="text" name="name" id="name" placeholder="name of recipe" onChange={this.handleChange} value={this.state.name} />
+                        </Col>
                     </AvGroup>
                     <AvGroup>
-                        <Label for="description">Description</Label>
-                        <AvInput type="textarea" name="description" id="description" placeholder="brief description of the recipe" onChange={this.handleChange} value={this.state.description} />
+                        <Col sx="auto">
+                            <Label for="description">Description</Label>
+                            <AvInput type="textarea" name="description" id="description" placeholder="brief description of the recipe" onChange={this.handleChange} value={this.state.description} />
+                        </Col>
                     </AvGroup>
                     <AvGroup>
-                        <Label for="ingredients">Ingredients</Label>
+                        <Col sx = "auto">
+                            <Label for="ingredients">Ingredients</Label>
 
-                        {/* Creates an input field for every array element */}
-                        {[...Array(this.state.ingredientNum)].map((e, i) =>
-                            <Col sm={7}>
-                                <AvInput required name="ingredient" id={i} onChange={this.updateIngredients} value={this.state.ingredientsList[i]} />
-                            </Col>
-                        )}
-                        <hr />
-                        <Button color="info" onClick={this.addIngredient}>Add Ingredient</Button>{' '}
+                            {/* Creates an input field for every array element */}
+                            {[...Array(this.state.ingredientNum)].map((e, i) =>
+                                    <AvInput required name="ingredient" id={i} onChange={this.updateIngredients} value={this.state.ingredientsList[i]} />
+                            )}
+                            <hr />
+                            <Button color="info" onClick={this.addIngredient}>Add Ingredient</Button>{' '}
+                        </Col>
                     </AvGroup>
-                    <AvField type="select" name="appliances" label="Appliances" helpMessage="Select all that apply." multiple required onChange={this.handleChange}>
-                        <option>Oven</option>
-                        <option>Stove</option>
-                        <option>Blender</option>
-                        <option>Oven-safe skillet</option>
-                        <option>Sauce pan</option>
-                        <option>Slow cooker</option>
-                        <option>Grill</option>
-                    </AvField>
+                    <Col sx="auto">
+                        <AvField type="select" name="appliances" label="Appliances" helpMessage="Select all that apply." multiple required onChange={this.handleChange}>
+                            <option>Oven</option>
+                            <option>Stove</option>
+                            <option>Blender</option>
+                            <option>Oven-safe skillet</option>
+                            <option>Sauce pan</option>
+                            <option>Slow cooker</option>
+                            <option>Grill</option>
+                            <option>NONE</option>
+                        </AvField>
+                    </Col>
                     <AvGroup>
-                        <Label for="instructions">Instructions</Label>
-                        <AvInput type="textarea" name="instructions" id="instructions" placeholder="Put each instruction on a new line" onChange={this.handleChange} value={this.state.instructions} />
+                        <Col sx="auto">
+                            <Label for="instructions">Instructions</Label>
+                            <AvInput type="textarea" name="instructions" id="instructions" placeholder="Put each instruction on a new line" onChange={this.handleChange} value={this.state.instructions} />
+                        </Col>
                     </AvGroup>
+                    <Col sx="auto">
+                        <AvField type="select" name="tags" label="Tags" helpMessage="Select all that apply." multiple required onChange={this.handleChange}>
+                            <option>Dairy-Free</option>
+                            <option>Gluten-Free</option>
+                            <option>Low-Carb</option>
+                            <option>Vegetarian</option>
+                            <option>Vegan</option>
+                            <option>NONE</option>
+                        </AvField>
+                    </Col>
                     <Button type="submit">Submit</Button>
                 </AvForm>
             </div>
