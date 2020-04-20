@@ -10,7 +10,6 @@ class Recipe extends React.Component {
     render() {
         // only display a recipe if a recipe has been chosen
         const { recipe } = this.props;
-        const instructionsList = recipe.instructions.split('\n');
         if (recipe) {
             return (
                 <div className="recipe">
@@ -47,7 +46,7 @@ class Recipe extends React.Component {
                         <Col xs="auto">
                             <ListGroup>
                                 <h2>Instructions</h2>
-                                {instructionsList.map(i =>
+                                {recipe.instructionsList.map(i =>
                                     <ListGroupItem key={i}>{i}</ListGroupItem>)}
                             </ListGroup>
                         </Col>
@@ -75,5 +74,5 @@ const mapStateToProps = (state, ownProps) => {
 
 export default compose(connect(mapStateToProps),
     firestoreConnect(props => [
-        { collection: "projects" }
+        { collection: "recipes" }
     ]))(Recipe);
