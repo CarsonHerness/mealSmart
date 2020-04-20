@@ -11,14 +11,39 @@ class Home extends React.Component {
         super(props);
 
         //Create local state to store search term
-        this.state = { searchName: '' };
+        this.state = {
+            searchName: '',
+            filteredRecipes: this.props.recipes
+        };
 
         this.handleNameSearch = this.handleNameSearch.bind(this);
+        this.updateNameText = this.updateNameText.bind(this);
+    }
+
+    updateNameText(event){
+        
+        this.setState({ searchName: event.target.value });
     }
 
     handleNameSearch(event) {
-        this.setState({ searchName: event.target.value });
+
+        event.preventDefault();
+
+        if (this.props.recipes) {
+
+            let newFilteredRecipes = null;
+
+            newFilteredRecipes = this.props.recipes.filter(recipe => {
+                return recipe.name.toLowerCase().indexOf(this.state.searchName.toLowerCase()) !== -1;
+            });
+
+            this.setState({ filteredRecipes: newFilteredRecipes });
+        }
+
+
     }
+
+
 
     render() {
         // Grabs the recipes object off the props
@@ -26,25 +51,20 @@ class Home extends React.Component {
 
         //Get search term
         const { searchName } = this.state;
+        
+        //Get search term
+        const { filteredRecipes } = this.state;
 
-        let filteredRecipes = null;
-
-        //Filter recipes by checking if search term is a substring of the title
-        if (recipes) {
-            filteredRecipes = recipes.filter(recipe => {
-                return recipe.name.toLowerCase().indexOf(searchName.toLowerCase()) !== -1;
-            });
-        }
 
         return (
             <div className="App">
                 <body className="App-body">
-                    <form >
+                    <form onSubmit={this.handleNameSearch}>
                         <label>
                             Search by recipe name:
-              <input type="text" name="name" value={searchName} onChange={this.handleNameSearch} />
+              <input type="text" name="name" value={searchName} onChange={this.updateNameText} />
                         </label>
-                        {/* <input type="submit" value="Submit" /> */}
+                        <input type="submit" value="Submit" />
                     </form>
                     <CardDeck>
                         {/* Only do map if recipes exist, and only display searched recipes. */}
