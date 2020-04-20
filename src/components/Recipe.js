@@ -10,7 +10,6 @@ class Recipe extends React.Component {
     render() {
         // only display a recipe if a recipe has been chosen
         const { recipe } = this.props;
-        const instructionsList = recipe.instructions.split('\n');
         if (recipe) {
             return (
                 <div className="recipe">
@@ -30,12 +29,25 @@ class Recipe extends React.Component {
                             <ListGroup>
                                 <h2>Ingredients</h2>
                                 {recipe.ingredientsList.map(i =>
-                                    <ListGroupItem>{i}</ListGroupItem>)}
+                                    <ListGroupItem key={i}>{i}</ListGroupItem>)}
                             </ListGroup>
-                            <h2>Instructions</h2>
-                            {instructionsList.map(i =>
-                                <ListGroupItem>{i}</ListGroupItem>)}
+                        </Col>
+                        <Col xs="auto">
                             <ListGroup>
+                                <h2>Appliances</h2>
+                                {Object.keys(recipe.applianceList).map((keyName, i) => {
+                                    if (recipe.applianceList[keyName]) {
+                                        return <ListGroupItem key={i}>{keyName}</ListGroupItem>
+                                }})}
+                            </ListGroup>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col xs="auto">
+                            <ListGroup>
+                                <h2>Instructions</h2>
+                                {recipe.instructionsList.map(i =>
+                                    <ListGroupItem key={i}>{i}</ListGroupItem>)}
                             </ListGroup>
                         </Col>
                     </Row>
@@ -62,5 +74,5 @@ const mapStateToProps = (state, ownProps) => {
 
 export default compose(connect(mapStateToProps),
     firestoreConnect(props => [
-        { collection: "projects" }
+        { collection: "recipes" }
     ]))(Recipe);
