@@ -30,12 +30,25 @@ class Recipe extends React.Component {
                             <ListGroup>
                                 <h2>Ingredients</h2>
                                 {recipe.ingredientsList.map(i =>
-                                    <ListGroupItem>{i}</ListGroupItem>)}
+                                    <ListGroupItem key={i}>{i}</ListGroupItem>)}
                             </ListGroup>
-                            <h2>Instructions</h2>
-                            {instructionsList.map(i =>
-                                <ListGroupItem>{i}</ListGroupItem>)}
+                        </Col>
+                        <Col xs="auto">
                             <ListGroup>
+                                <h2>Appliances</h2>
+                                {Object.keys(recipe.applianceList).map((keyName, i) => {
+                                    if (recipe.applianceList[keyName]) {
+                                        return <ListGroupItem key={i}>{keyName}</ListGroupItem>
+                                }})}
+                            </ListGroup>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col xs="auto">
+                            <ListGroup>
+                                <h2>Instructions</h2>
+                                {instructionsList.map(i =>
+                                    <ListGroupItem key={i}>{i}</ListGroupItem>)}
                             </ListGroup>
                         </Col>
                     </Row>
