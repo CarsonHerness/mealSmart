@@ -11,13 +11,13 @@ class Home extends React.Component {
         super(props);
 
         //Create local state to store search term
-        this.state = { search: '' };
+        this.state = { searchName: '' };
 
-        this.handleChange = this.handleChange.bind(this);
+        this.handleNameSearch = this.handleNameSearch.bind(this);
     }
 
-    handleChange(event) {
-        this.setState({ search: event.target.value });
+    handleNameSearch(event) {
+        this.setState({ searchName: event.target.value });
     }
 
     render() {
@@ -25,14 +25,14 @@ class Home extends React.Component {
         const { recipes } = this.props;
 
         //Get search term
-        const { search } = this.state;
+        const { searchName } = this.state;
 
         let filteredRecipes = null;
 
         //Filter recipes by checking if search term is a substring of the title
         if (recipes) {
             filteredRecipes = recipes.filter(recipe => {
-                return recipe.name.toLowerCase().indexOf(search.toLowerCase()) !== -1;
+                return recipe.name.toLowerCase().indexOf(searchName.toLowerCase()) !== -1;
             });
         }
 
@@ -41,8 +41,8 @@ class Home extends React.Component {
                 <body className="App-body">
                     <form >
                         <label>
-                            Search:
-              <input type="text" name="name" value={this.state.search} onChange={this.handleChange} />
+                            Search by recipe name:
+              <input type="text" name="name" value={searchName} onChange={this.handleNameSearch} />
                         </label>
                         {/* <input type="submit" value="Submit" /> */}
                     </form>
