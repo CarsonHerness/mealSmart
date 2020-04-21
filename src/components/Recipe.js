@@ -1,6 +1,6 @@
 import React from 'react';
 import { Row, Col } from 'reactstrap';
-import { ListGroup, ListGroupItem } from 'reactstrap';
+import { Badge, ListGroup, ListGroupItem } from 'reactstrap';
 
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
@@ -13,6 +13,11 @@ class Recipe extends React.Component {
         if (recipe) {
             return (
                 <div className="recipe">
+                    {Object.keys(recipe.tags).map((keyName, i) => {
+                        if (recipe.tags[keyName]) {
+                            return <Badge key={i} color="secondary" pill>{keyName}</Badge>
+                        }
+                    })}
                     <Row>
                         <Col xs="auto">
                             <h1>{recipe.name}</h1>
@@ -38,7 +43,8 @@ class Recipe extends React.Component {
                                 {Object.keys(recipe.applianceList).map((keyName, i) => {
                                     if (recipe.applianceList[keyName]) {
                                         return <ListGroupItem key={i}>{keyName}</ListGroupItem>
-                                }})}
+                                    }
+                                })}
                             </ListGroup>
                         </Col>
                     </Row>
