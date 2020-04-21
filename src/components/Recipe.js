@@ -31,6 +31,17 @@ class Recipe extends React.Component {
                     </Row>
                     <Row>
                         <Col xs="auto">
+                            <div>Prep Time: {recipe.prepTime}</div>
+                        </Col>
+                        <Col xs="auto">
+                            <div>Cook Time: {recipe.cookTime}</div>
+                        </Col>
+                        <Col xs="auto">
+                            <div><b>Total Time:</b> {recipe.totalTime}</div>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col xs="auto">
                             <ListGroup>
                                 <h2>Ingredients</h2>
                                 {recipe.ingredientsList.map(i =>

@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { addRecipe } from '../store/actions/recipeActions'
 
 import { AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
-import { Button, Label, Col } from 'reactstrap';
+import { Button, Label, Col, Row } from 'reactstrap';
 
 class AddRecipe extends Component {
     constructor() {
@@ -23,7 +23,10 @@ class AddRecipe extends Component {
             instructions: "",
             instructionsList: [],
             ingredientNum: 0,
-            tags: {}
+            tags: {},
+            prepTime: "",
+            cookTime: "",
+            totalTime: ""
         };
     }
 
@@ -84,7 +87,10 @@ class AddRecipe extends Component {
             instructions: "",
             instructionsList: [],
             ingredientNum: 0,
-            tags: {}
+            tags: {},
+            prepTime: "",
+            cookTime: "",
+            totalTime: ""
         })
     }
 
@@ -110,19 +116,39 @@ class AddRecipe extends Component {
             <div>
                 <AvForm onSubmit={this.handleSubmit}>
                     <AvGroup>
-                        <Col sx="auto">
+                        <Col xs="auto">
                             <Label for="name">Name</Label>
                             <AvInput type="text" name="name" id="name" placeholder="name of recipe" onChange={this.handleChange} value={this.state.name} />
                         </Col>
                     </AvGroup>
                     <AvGroup>
-                        <Col sx="auto">
+                        <Col xs="auto">
                             <Label for="description">Description</Label>
                             <AvInput type="textarea" name="description" id="description" placeholder="brief description of the recipe" onChange={this.handleChange} value={this.state.description} />
                         </Col>
                     </AvGroup>
+                    <Row form>
+                        <AvGroup>
+                            <Col xs="auto">
+                                <Label for="prepTime">Prep Time</Label>
+                                <AvInput type="text" name="prepTime" id="prepTime" placeholder="prep time" onChange={this.handleChange} value={this.state.prepTime} />
+                            </Col>
+                        </AvGroup>
+                        <AvGroup>
+                            <Col xs="auto">
+                                <Label for="cookTime">Cook Time</Label>
+                                <AvInput type="text" name="cookTime" id="cookTime" placeholder="cook time" onChange={this.handleChange} value={this.state.cookTime} />
+                            </Col>
+                        </AvGroup>
+                        <AvGroup>
+                            <Col xs="auto">
+                                <Label for="totalTime">Total Time</Label>
+                                <AvInput type="text" name="totalTime" id="totalTime" placeholder="total time" onChange={this.handleChange} value={this.state.totalTime} />
+                            </Col>
+                        </AvGroup>
+                    </Row>
                     <AvGroup>
-                        <Col sx = "auto">
+                        <Col xs = "auto">
                             <Label for="ingredients">Ingredients</Label>
 
                             {/* Creates an input field for every array element */}
@@ -133,7 +159,7 @@ class AddRecipe extends Component {
                             <Button color="info" onClick={this.addIngredient}>Add Ingredient</Button>{' '}
                         </Col>
                     </AvGroup>
-                    <Col sx="auto">
+                    <Col xs="auto">
                         <AvField type="select" name="appliances" label="Appliances" helpMessage="Select all that apply." multiple required onChange={this.handleChange}>
                             <option>Oven</option>
                             <option>Stove</option>
@@ -146,12 +172,12 @@ class AddRecipe extends Component {
                         </AvField>
                     </Col>
                     <AvGroup>
-                        <Col sx="auto">
+                        <Col xs="auto">
                             <Label for="instructions">Instructions</Label>
                             <AvInput type="textarea" name="instructions" id="instructions" placeholder="Put each instruction on a new line" onChange={this.handleChange} value={this.state.instructions} />
                         </Col>
                     </AvGroup>
-                    <Col sx="auto">
+                    <Col xs="auto">
                         <AvField type="select" name="tags" label="Tags" helpMessage="Select all that apply." multiple required onChange={this.handleChange}>
                             <option>Dairy-Free</option>
                             <option>Gluten-Free</option>
