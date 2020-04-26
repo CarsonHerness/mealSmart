@@ -6,10 +6,13 @@ import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
 
+import moment from 'moment';
+
 class Recipe extends React.Component {
     render() {
         // only display a recipe if a recipe has been chosen
         const { recipe } = this.props;
+
         if (recipe) {
             return (
                 <div className="recipe">
@@ -27,6 +30,7 @@ class Recipe extends React.Component {
                     <Row>
                         <Col xs="auto">
                             <div> Posted by {recipe.authorFirstName} {recipe.authorLastName} </div>
+                            <p>{moment(recipe.createdAt.toDate()).calendar()}</p>
                         </Col>
                     </Row>
                     <Row>
@@ -85,9 +89,10 @@ const mapStateToProps = (state, ownProps) => {
     const recipes = state.firestore.data.recipes;
     const recipe = recipes ? recipes[id] : null
     return {
-        recipe: recipe
+        recipe: recipe,
     }
 }
+
 
 export default compose(connect(mapStateToProps),
     firestoreConnect(props => [

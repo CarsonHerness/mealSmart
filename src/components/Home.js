@@ -15,7 +15,7 @@ class Home extends React.Component {
                     <form>
                         <label>
                             Search:
-              <input type="text" name="name" />
+                            <input type="text" name="name" />
                         </label>
                         <input type="submit" value="Submit" />
                     </form>
@@ -36,7 +36,6 @@ class Home extends React.Component {
 
 // mapStateToProps tells connect what data to retrieve from the store
 const mapStateToProps = (state) => {
-    console.log(state);
     return {
         // Attach the recipe property from STATE's rootReducer
         //   which in turn has a recipes property from the projectReducer

@@ -10,6 +10,11 @@ import {
   ModalFooter
 } from 'reactstrap';
 
+import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+
+import { signUp } from '../store/actions/authActions'
+
 class SignUpModal extends Component {
   constructor(props) {
     super(props);
@@ -27,14 +32,14 @@ class SignUpModal extends Component {
   }
 
   toggle() {
-    this.setState({
-      modal: !this.state.modal
-    });
+      this.setState({
+        modal: !this.state.modal
+      });
   }
 
   handleSubmit = (e) => {
     e.preventDefault();
-    console.log(this.state)
+    this.props.signUp(this.state)
   }
 
   handleChange = (e) => {
@@ -44,6 +49,12 @@ class SignUpModal extends Component {
   }
 
   render() {
+    const { auth, authError } = this.props;
+
+    // if a user is signed in, they shouldn't be able to access this page
+    //   redirect them to the homepage
+    if (auth.uid) return <Redirect to='/' />
+
     return (
       <div>
         <Button color="primary" onClick={this.toggle}>Sign Up</Button>
@@ -65,8 +76,11 @@ class SignUpModal extends Component {
               </FormGroup>
             </ModalBody>
             <ModalFooter>
-              <Button type="submit" color="primary" onClick={this.toggle}>Sign Up</Button>{' '}
+              <Button type="submit" color="primary">Sign Up</Button>{' '}
               <Button color="secondary" onClick={this.toggle}>Cancel</Button>
+              <div className = "red-text center">
+                {authError ? <p>{authError}</p> : null}
+              </div>
             </ModalFooter>
           </Form>
         </Modal>
@@ -75,4 +89,17 @@ class SignUpModal extends Component {
   }
 }
 
-export default SignUpModal;
+const mapStateToProps = (state) => {
+  return {
+    auth: state.firebase.auth,
+    authError: state.auth.authError
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    signUp: (newUser) => dispatch(signUp(newUser))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignUpModal);

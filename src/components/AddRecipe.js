@@ -6,6 +6,8 @@ import { addRecipe } from '../store/actions/recipeActions'
 import { AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
 import { Button, Label, Col, Row } from 'reactstrap';
 
+import { Redirect } from 'react-router-dom';
+
 class AddRecipe extends Component {
     constructor() {
         super();
@@ -77,6 +79,7 @@ class AddRecipe extends Component {
 
         // Pass state into action performed by mapDispatchToProps
         this.props.addRecipe(this.state);
+        this.props.history.push('/');
         
         // reset state to be blank
         this.setState({
@@ -112,6 +115,12 @@ class AddRecipe extends Component {
     }
 
     render() {
+        const { auth } = this.props;
+
+        // if a user is not signed in, they shouldn't be able to access this page
+        //   redirect them to the homepage
+        if (!auth.uid) return <Redirect to='/' />
+
         return (
             <div>
                 <AvForm onSubmit={this.handleSubmit}>
@@ -194,6 +203,12 @@ class AddRecipe extends Component {
     }
 }
 
+const mapStateToProps = (state) => {
+    return {
+        auth: state.firebase.auth
+    }
+}
+
 // mapDispatchToProps tells connect to perform an action before updating props
 const mapDispatchToProps = (dispatch) => {
     return {
@@ -201,4 +216,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(null, mapDispatchToProps)(AddRecipe);
+export default connect(mapStateToProps, mapDispatchToProps)(AddRecipe);

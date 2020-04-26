@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { signIn } from  '../store/actions/authActions'
 import {
   Button,
   Form,
@@ -9,6 +11,8 @@ import {
   ModalBody,
   ModalFooter
 } from 'reactstrap';
+
+import { Redirect } from 'react-router-dom';
 
 class LoginModal extends Component {
   constructor(props) {
@@ -32,7 +36,7 @@ class LoginModal extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    console.log(this.state)
+    this.props.signIn(this.state);
   }
 
   handleChange = (e) => {
@@ -42,6 +46,12 @@ class LoginModal extends Component {
   }
 
   render() {
+    const { authError, auth } = this.props;
+
+    // if a user is signed in, they shouldn't be able to access this page
+    //   redirect them to the homepage
+    if (auth.uid) return <Redirect to='/' />
+
     return (
       <div>
         <Button color="light" onClick={this.toggle}>Log In</Button>
@@ -58,8 +68,11 @@ class LoginModal extends Component {
               </FormGroup>
             </ModalBody>
             <ModalFooter>
-              <Button type="submit" color="primary" onClick={this.toggle}>Log In</Button>{' '}
+              <Button type="submit" color="primary">Log In</Button>{' '}
               <Button color="secondary" onClick={this.toggle}>Cancel</Button>
+              <div className = "red-text center">
+                {authError ? <p>{authError}</p> : null}
+              </div>
             </ModalFooter>
           </Form>
         </Modal>
@@ -68,4 +81,17 @@ class LoginModal extends Component {
   }
 }
 
-export default LoginModal;
+const mapStateToProps = (state) => {
+  return {
+    authError: state.auth.authError,
+    auth: state.firebase.auth
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    signIn: (creds) => dispatch(signIn(creds))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginModal);

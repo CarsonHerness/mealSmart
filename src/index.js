@@ -20,6 +20,10 @@ import { ReactReduxFirebaseProvider, getFirebase } from 'react-redux-firebase';
 import fbConfig from './config/fbConfig';
 import firebase from 'firebase/app';
 
+import { useSelector } from 'react-redux'
+import { isLoaded } from 'react-redux-firebase'
+import { BrowserRouter } from 'react-router-dom';
+
 // Set up redux store
 // Use thunk as middleware for extra funcitonality
 const store = createStore(
@@ -42,11 +46,22 @@ const rrfProps = {
     createFirestoreInstance
 };
 
+function AuthIsLoaded({ children }) {
+    const auth = useSelector(state => state.firebase.auth)
+    if (!isLoaded(auth)) return <div>splash screen...</div>;
+    return children
+  }
+  
+
 // Provider binds redux state to the application
 ReactDOM.render(
     <Provider store={store}>
         <ReactReduxFirebaseProvider {...rrfProps}>
-            <App />
+            <BrowserRouter>
+                <AuthIsLoaded>
+                    <App />
+                </AuthIsLoaded>
+            </BrowserRouter>
         </ReactReduxFirebaseProvider>
     </Provider>,
     document.getElementById("root")

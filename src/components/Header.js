@@ -2,8 +2,9 @@ import logo from '../logo.png';
 
 import React, { useState } from 'react';
 
-import LoginModal from '../components/LoginModal';
-import SignUpModal from '../components/SignUpModal';
+import SignedInLinks from '../components/SignedInLinks';
+import SignedOutLinks from '../components/SignedOutLinks';
+import { connect } from 'react-redux'
 
 import {
     Collapse,
@@ -16,6 +17,12 @@ import {
 } from 'reactstrap';
 
 const Header = (props) => {
+    const { auth, profile } = props;
+
+    // show signed in links if a user is signed in
+    // otherwise show signed out links
+    const links = auth.uid ? <SignedInLinks profile={profile}/> : <SignedOutLinks />;
+
     const [isOpen, setIsOpen] = useState(false);
 
     const toggle = () => setIsOpen(!isOpen);
@@ -33,16 +40,19 @@ const Header = (props) => {
                         <NavItem>
                             <NavLink href="/contact/">Contact</NavLink>
                         </NavItem>
-                        <NavItem>
-                            <NavLink href="/add-recipe/">Add Recipe</NavLink>
-                        </NavItem>
                     </Nav>
                 </Collapse>
-                <LoginModal/>
-                <SignUpModal/>
+                { links }
             </Navbar>
         </div>
     );
 }
 
-export default Header;
+const mapStateToProps = (state) => {
+    return {
+        auth: state.firebase.auth,
+        profile: state.firebase.profile
+    }
+}
+
+export default connect(mapStateToProps)(Header);
