@@ -32,7 +32,7 @@ class Home extends React.Component {
 
         event.preventDefault();
 
-        if (this.props.recipes && this.state.searchName != '') {
+        if (this.props.recipes && this.state.searchName !== '') {
 
             let newFilteredRecipes = null;
 
@@ -42,8 +42,6 @@ class Home extends React.Component {
 
             this.setState({ filteredRecipes: newFilteredRecipes });
         }
-
-
     }
 
 
@@ -56,22 +54,22 @@ class Home extends React.Component {
 
         event.preventDefault();
 
-        if (this.props.recipes && this.state.searchIngredients != '') {
-
+        if (this.props.recipes && this.state.searchIngredients !== '') {
             let newFilteredRecipes = null;
-
+            let searchIngredientsList = this.state.searchIngredients.split(" ");
             newFilteredRecipes = this.props.recipes.filter(recipe => {
-                //This is a really bad practice checking for a particular ingredient, but it works:
-                //Specifically, I check to see if there's a space in front of the ingredient
-                //to make sure that the substring at least matches the beginning of the word.
-                return !!(recipe.ingredientsList
-                    .filter(ingredient => ingredient.toLowerCase().indexOf(" " + this.state.searchIngredients.toLowerCase()) !== -1).length);
+                let hasIngredients = true;
+                
+                //Check whether each ingredient is present in given recipe
+                for(let index = 0; index < searchIngredientsList.length; index++) {
+                    let searchedIngredient = searchIngredientsList[index];
+                    hasIngredients = hasIngredients && (recipe.ingredientsList
+                        .filter(ingredient => ingredient.toLowerCase().indexOf(searchedIngredient.toLowerCase()) !== -1).length !== 0);
+                }
+                return hasIngredients;
             });
-
             this.setState({ filteredRecipes: newFilteredRecipes });
         }
-
-
     }
 
 
@@ -108,7 +106,7 @@ class Home extends React.Component {
                             <Col>
                                 <form onSubmit={this.handleIngredientsSearch}>
                                     <label>
-                                        Search by recipe ingredients:
+                                        Search by recipe ingredients: 
               <input type="text" name="name" value={searchIngredients} onChange={this.updateIngredientsText} />
                                     </label>
                                     <input type="submit" value="Submit" />
