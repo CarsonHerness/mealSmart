@@ -14,6 +14,7 @@ class Home extends React.Component {
         this.state = {
             searchName: '',
             searchIngredients: '',
+            excludeIngredients: '',
             filteredRecipes: this.props.recipes
         };
 
@@ -21,8 +22,26 @@ class Home extends React.Component {
         this.updateNameText = this.updateNameText.bind(this);
         this.handleIngredientsSearch = this.handleIngredientsSearch.bind(this);
         this.updateIngredientsText = this.updateIngredientsText.bind(this);
+        this.handleExcludeIngredientsSubmit = this.updateExcludeIngredientsText.bind(this);
+        this.updateExcludeIngredientsText = this.updateExcludeIngredientsText.bind(this);
     }
 
+    //We want to do nothing in the case that the user preses enter on the exclude ingredients box.
+    handleExcludeIngredientsSubmit(event) {
+
+        event.preventDefault();
+
+        return false;
+
+    }
+
+    //Allows search bar text to update when user types
+    updateExcludeIngredientsText(event) {
+
+        this.setState({ excludeIngredients: event.target.value });
+    }
+
+    //Allows search bar text to update when user types
     updateNameText(event) {
 
         this.setState({ searchName: event.target.value });
@@ -38,13 +57,32 @@ class Home extends React.Component {
 
             newFilteredRecipes = this.props.recipes.filter(recipe => {
                 return recipe.name.toLowerCase().indexOf(this.state.searchName.toLowerCase()) !== -1;
+
+
             });
+
+            if (this.state.excludeIngredients !== '') {
+
+                let excludeIngredientsList = this.state.excludeIngredients.split(" ");
+
+                newFilteredRecipes = newFilteredRecipes.filter(recipe => {
+                    let hasIngredients = true;
+                    //Check whether each ingredient is present in given recipe, and if it is, exclude it
+                    for (let index = 0; index < excludeIngredientsList.length; index++) {
+                        let excludedIngredient = excludeIngredientsList[index];
+                        hasIngredients = hasIngredients && (recipe.ingredientsList
+                            .filter(ingredient => ingredient.toLowerCase().indexOf(excludedIngredient.toLowerCase()) !== -1).length == 0);
+                    }
+                    return hasIngredients;
+                });
+
+            }
 
             this.setState({ filteredRecipes: newFilteredRecipes });
         }
     }
 
-
+    //Allows search bar text to update when user types
     updateIngredientsText(event) {
 
         this.setState({ searchIngredients: event.target.value });
@@ -59,9 +97,8 @@ class Home extends React.Component {
             let searchIngredientsList = this.state.searchIngredients.split(" ");
             newFilteredRecipes = this.props.recipes.filter(recipe => {
                 let hasIngredients = true;
-                
                 //Check whether each ingredient is present in given recipe
-                for(let index = 0; index < searchIngredientsList.length; index++) {
+                for (let index = 0; index < searchIngredientsList.length; index++) {
                     let searchedIngredient = searchIngredientsList[index];
                     hasIngredients = hasIngredients && (recipe.ingredientsList
                         .filter(ingredient => ingredient.toLowerCase().indexOf(searchedIngredient.toLowerCase()) !== -1).length !== 0);
@@ -78,14 +115,8 @@ class Home extends React.Component {
         // Grabs the recipes object off the props
         const { recipes } = this.props;
 
-        //Get search terms
-        const { searchName } = this.state;
-
-        const { searchIngredients } = this.state;
-
-        //Get filtered recipes
-        const { filteredRecipes } = this.state;
-
+        //Get search terms and recipes from state
+        const { searchName, searchIngredients, excludeIngredients, filteredRecipes } = this.state;
 
         return (
             <div className="App">
@@ -106,10 +137,20 @@ class Home extends React.Component {
                             <Col>
                                 <form onSubmit={this.handleIngredientsSearch}>
                                     <label>
-                                        Search by recipe ingredients: 
+                                        Search by recipe ingredients:
               <input type="text" name="name" value={searchIngredients} onChange={this.updateIngredientsText} />
                                     </label>
                                     <input type="submit" value="Submit" />
+                                </form>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <form onSubmit={this.handleNameSearch}>
+                                    <label>
+                                        Exclude ingredients:
+              <input type="text" name="name" value={excludeIngredients} onChange={this.updateExcludeIngredientsText} />
+                                    </label>
                                 </form>
                             </Col>
                         </Row>
